@@ -16,3 +16,6 @@
 >
 > > 1. tar -zxf BlueOcean/harbor-offline-installer.tar.gz -C /opt/
 > > 2. sh /opt/harbor/install.sh
+
+
+You Know
