@@ -159,3 +159,11 @@ roleRef:
 > > > ![插件安装](https://bbs-img.huaweicloud.com/blogs/img/20231024/1698142010333732951.png)
 > > 6.  安装完成后进入用户创建页面，创建一个Username 为 jenkins，密码为 000000 ，其他项随便填 , 如图：
 > > > ![创建账户](https://bbs-img.huaweicloud.com/blogs/img/20231025/1698229461407799933.JPG)
+> > > ![创建账户](https://bbs-img.huaweicloud.com/blogs/img/20231024/1698142491379952155.JPG)
+> > 7.单击“开始使用 Jenkins ”按钮并使用新创建的用户登录 Jenkins
+> 3. 部署 Gitlab
+> > ```
+> > GitLab是利用Ruby on Rails一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。与GitHub类似，GitLab能够浏览源代码，管理缺陷和注释，可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库，团队成员可以利用内置的简单聊天程序（Wall）进行交流。GitLab还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。本项目GitLab与Harbor共用一台服务器。
+> > ```
+> > 1. 编写 Gitlab 清单文件 `vi gitlab-deploy.yaml `
+> > 2. 
