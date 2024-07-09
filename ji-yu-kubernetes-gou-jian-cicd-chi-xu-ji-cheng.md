@@ -9,12 +9,12 @@
 > 1. 解压 BlueOcean.tar.gz , 安装docker-compose 
 >
 > > 1. `tar -zxvf BlueOcean.tar.gz` 
-> > 2. `cp BlueOcean/tools/docker-compose-Linux-x86_64 /usr/bin/docker-compose` 
+> > 2. `cp BlueOcean/tools/docker-compose-Linux-x86_64 /usr/bin/docker-compose`  
 > > 3. `docker-compose version`  
 
 > 2. 安装 Harbor , 默认账号密码 `admin` `Harbor12345` , `http://master_ip`  
 >
-> > 1. tar -zxf BlueOcean/harbor-offline-installer.tar.gz -C /opt/ 
+> > 1. tar -zxf BlueOcean/harbor-offline-installer.tar.gz -C /opt/  
 > > 2. sh /opt/harbor/install.sh
 > > 3. 登录后新建 `springcloud` , 访问级别设置为公开
 > > 4. 上传镜像到 Harbor 
@@ -22,8 +22,8 @@
 > > >  - docker load -i BlueOcean/images/maven_latest.tar  
 > > >  - docker tag maven IP/library/maven 
 > > >  - docker push IP/library/maven
-> > >  - docker load -i BlueOcean/images/java_8-jre.tar 
-> > >  - docker load -i BlueOcean/images/jenkins_jenkins_latest.tar  
+> > >  - docker load -i BlueOcean/images/java_8-jre.tar  
+> > >  - docker load -i BlueOcean/images/jenkins_jenkins_latest.tar   
 > > >  - docker load -i BlueOcean/images/gitlab_gitlab-ce_latest.tar
 
 * #### 部署 Jenkins
@@ -36,7 +36,7 @@
 > > ```
 > > 2. 编写资源清单文件 `vi jenkins-deploy.yaml `
 ```yaml 
-apiVersion: v1  
+apiVersion: v1   
 kind: Service  
 metadata: 
   name: jenkins
@@ -75,7 +75,7 @@ spec:
       serviceAccountName: jenkins-admin
       containers:
       - name: jenkins
-        image: jenkins/jenkins:latest
+        image: jenkins/jenkins:latest 
         imagePullPolicy: IfNotPresent
         securityContext: 
           runAsUser: 0
@@ -109,12 +109,12 @@ spec:
           path: /usr/bin/kubectl
       - name: kubeconfig
         hostPath:
-          path: /root/.kube
+          path: /root/.kube 
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: jenkinshome
+  name: jenkinshome 
   annotations:
     volume.beta.kubernetes.io/storage-class: local-path
 spec:
@@ -122,12 +122,12 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1024Mi
+      storage: 1024Mi 
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: jenkins-admin
+  name: jenkins-admin 
   labels:
     name: jenkins
 ---
@@ -137,12 +137,18 @@ metadata: 
   name: jenkins-admin
   labels:
     name: jenkins
-subjects:
+subjects: 
   - kind: ServiceAccount
     name: jenkins-admin
     namespace: default
 roleRef:
   kind: ClusterRole
   name: cluster-admin 
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: rbac.authorization.k8s.io 
 ```
+
+> > 3. `kubectl -n devops apply -f jenkins-deploy.yaml` 
+> > 4. `kubectl -n devops get pods`
+> > 5. `kubectl -n devops cp BlueOcean/plugins/ jenkins-cc97fd4fc-v5dh2:/var/jenkins_home`
+> > 6. `kubectl -n devops rollout restart deployment jenkins`
+> 2. `kubectl -n devops get svc`
