@@ -18,11 +18,12 @@
 > > 2. sh /opt/harbor/install.sh
 > > 3. 登录后新建 `springcloud` , 访问级别设置为公开
 > > 4. 上传镜像到 Harbor 
-> > > docker login -uadmin -pHarbor12345 IP
-> > > docker load -i BlueOcean/images/maven_latest.tar 
-> > > docker tag maven IP/library/maven
-> > > docker push IP/library/maven
-> > > docker load -i BlueOcean/images/java_8-jre.tar
-> > > docker load -i BlueOcean/images/jenkins_jenkins_latest.tar
-> > > docker load -i BlueOcean/images/gitlab_gitlab-ce_latest.tar
+> > >  - docker login -uadmin -pHarbor12345 IP
+> > >  - docker load -i BlueOcean/images/maven_latest.tar  
+> > >  - docker tag maven IP/library/maven
+> > >  - docker push IP/library/maven
+> > >  - docker load -i BlueOcean/images/java_8-jre.tar 
+> > >  - docker load -i BlueOcean/images/jenkins_jenkins_latest.tar 
+> > >  - docker load -i BlueOcean/images/gitlab_gitlab-ce_latest.tar
 
+* #### 部署 Jenkins
