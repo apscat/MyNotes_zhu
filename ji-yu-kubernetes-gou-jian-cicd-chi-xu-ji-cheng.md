@@ -8,9 +8,9 @@
 
 > 1. 解压 BlueOcean.tar.gz , 安装docker-compose 
 >
-> > 1. `tar -zxvf BlueOcean.tar.gz`
+> > 1. `tar -zxvf BlueOcean.tar.gz` 
 > > 2. `cp BlueOcean/tools/docker-compose-Linux-x86_64 /usr/bin/docker-compose` 
-> > 3. `docker-compose version` 
+> > 3. `docker-compose version`  
 
 > 2. 安装 Harbor , 默认账号密码 `admin` `Harbor12345` , `http://master_ip` 
 >
@@ -23,7 +23,15 @@
 > > >  - docker tag maven IP/library/maven
 > > >  - docker push IP/library/maven
 > > >  - docker load -i BlueOcean/images/java_8-jre.tar 
-> > >  - docker load -i BlueOcean/images/jenkins_jenkins_latest.tar 
+> > >  - docker load -i BlueOcean/images/jenkins_jenkins_latest.tar  
 > > >  - docker load -i BlueOcean/images/gitlab_gitlab-ce_latest.tar
 
 * #### 部署 Jenkins
+
+> 1. 安装 Jenkins  
+>
+> > 1. 新建命名空间 `kubectl create ns devops`
+> > ```
+> > 部署Jenkins需要使用到一个拥有相关权限的serviceAccount，名称为jenkins-admin，可以给jenkins-admin赋予一些必要的权限，也可以直接绑定一个cluster-admin的集群角色权限，此处选择给予集群角色权限。
+> > ```
+> > 
