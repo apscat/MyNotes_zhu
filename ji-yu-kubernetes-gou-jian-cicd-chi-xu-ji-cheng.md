@@ -167,4 +167,57 @@ roleRef:
 > GitLab是利用Ruby on Rails一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。与GitHub类似，GitLab能够浏览源代码，管理缺陷和注释，可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库，团队成员可以利用内置的简单聊天程序（Wall）进行交流。GitLab还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。本项目GitLab与Harbor共用一台服务器。
 > ```
 > 1. 编写 Gitlab 清单文件 `vi gitlab-deploy.yaml `
-> 2. 
+> > ```yaml
+> > apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+spec:
+  type: NodePort
+  ports:
+  - port: 443
+    nodePort: 30443
+    targetPort: 443
+    name: gitlab-443
+  - port: 80
+    nodePort: 30888
+    targetPort: 80
+    name: gitlab-80
+  selector:
+    app: gitlab
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab
+spec:
+  selector:
+    matchLabels:
+      app: gitlab
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      labels:
+        app: gitlab
+    spec:
+      containers:
+      - image: gitlab/gitlab-ce:latest
+        name: gitlab
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: GITLAB_ROOT_PASSWORD  
+          value: admin@123  # 此处为root用户对应的密码
+        - name: GITLAB_PORT
+          value: "80"
+        ports:
+        - containerPort: 443
+          name: gitlab-443
+        - containerPort: 80
+          name: gitlab-80
+> > ```
+
+> > 1. 部署 Gitlab `kubectl -n devops apply -f gitlab-deploy.yaml`
+> > 2. 查看 Pods `kubectl -n devops get pods`
+> > 3. 查看 Gitlab Service `kubectl -n devops get svc`
+> > 4. 因为 Gitlab 启动较慢 大致 1-3 分钟 , 查看启动状态 `kubectl logs`,完成后通过 Web 访问 `http://master_IP:30888` , 默认 用户名为 `root` 密码为 `admin@123`
+> > 5. 
