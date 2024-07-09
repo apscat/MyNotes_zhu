@@ -151,4 +151,9 @@ roleRef:
 > > 4. `kubectl -n devops get pods`
 > > 5. `kubectl -n devops cp BlueOcean/plugins/ jenkins-cc97fd4fc-v5dh2:/var/jenkins_home`
 > > 6. `kubectl -n devops rollout restart deployment jenkins`
-> 2. `kubectl -n devops get svc`
+> 2. 访问 Jenkins
+> > 1.  查看 Jenkins Service 端口 `kubectl -n devops get svc`
+> > 2.  Web 访问 http://master_IP:30880
+> > 3.  获取 Jenkins 密码 `kubectl -n devops exec deploy/jenkins -- cat /var/jenkins_home/secrets/initialAdminPassword`
+> > 4.  输入密码后单击“继续”按钮,选择“跳过插件安装”,安装完成后进入用户创建页面，创建一个Username 为 jenkins，密码为 000000 ，其他项随便填 , 如图：
+> > > ![创建账户](https://bbs-img.huaweicloud.com/blogs/img/20231025/1698229461407799933.JPG)
