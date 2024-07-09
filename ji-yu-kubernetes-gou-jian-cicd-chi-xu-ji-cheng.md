@@ -35,7 +35,7 @@
 > > 部署Jenkins需要使用到一个拥有相关权限的serviceAccount，名称为jenkins-admin，可以给jenkins-admin赋予一些必要的权限，也可以直接绑定一个cluster-admin的集群角色权限，此处选择给予集群角色权限。
 > > ```
 > > 2. 编写资源清单文件 `vi jenkins-deploy.yaml `
-```yaml 
+```yaml
 apiVersion: v1   
 kind: Service  
 metadata: 
@@ -167,8 +167,8 @@ roleRef:
 > GitLab是利用Ruby on Rails一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。与GitHub类似，GitLab能够浏览源代码，管理缺陷和注释，可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库，团队成员可以利用内置的简单聊天程序（Wall）进行交流。GitLab还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。本项目GitLab与Harbor共用一台服务器。
 > ```
 > 1. 编写 Gitlab 清单文件 `vi gitlab-deploy.yaml `
-> > ```yaml
-> > apiVersion: v1
+```yaml
+apiVersion: v1
 kind: Service
 metadata:
   name: gitlab
@@ -214,7 +214,7 @@ spec:
           name: gitlab-443
         - containerPort: 80
           name: gitlab-80
-> > ```
+```
 
 > > 1. 部署 Gitlab `kubectl -n devops apply -f gitlab-deploy.yaml`
 > > 2. 查看 Pods `kubectl -n devops get pods`
