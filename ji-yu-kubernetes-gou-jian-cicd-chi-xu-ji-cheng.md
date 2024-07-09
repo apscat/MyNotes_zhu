@@ -162,7 +162,9 @@ roleRef:
 > > > ![创建账户](https://bbs-img.huaweicloud.com/blogs/img/20231024/1698142491379952155.JPG)
 > > > 
 > > 7.单击“开始使用 Jenkins ”按钮并使用新创建的用户登录 Jenkins
+
 * #### 部署 Gitlab##
+
 > ```
 > GitLab是利用Ruby on Rails一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。与GitHub类似，GitLab能够浏览源代码，管理缺陷和注释，可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库，团队成员可以利用内置的简单聊天程序（Wall）进行交流。GitLab还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。本项目GitLab与Harbor共用一台服务器。
 > ```
@@ -216,8 +218,8 @@ spec:
           name: gitlab-80
 ```
 
-> > 1. 部署 Gitlab `kubectl -n devops apply -f gitlab-deploy.yaml`
-> > 2. 查看 Pods `kubectl -n devops get pods`
-> > 3. 查看 Gitlab Service `kubectl -n devops get svc`
-> > 4. 因为 Gitlab 启动较慢 大致 1-3 分钟 , 查看启动状态 `kubectl logs`,完成后通过 Web 访问 `http://master_IP:30888` , 默认 用户名为 `root` 密码为 `admin@123`
-> > 5. 
+> 2. 部署 Gitlab `kubectl -n devops apply -f gitlab-deploy.yaml`
+> 3. 查看 Pods `kubectl -n devops get pods`
+> 4. 查看 Gitlab Service `kubectl -n devops get svc`
+> 5. 因为 Gitlab 启动较慢 大致 1-3 分钟 , 查看启动状态 `kubectl logs`,完成后通过 Web 访问 `http://master_IP:30888` , 默认 用户名为 `root` 密码为 `admin@123`
+> 6. 
