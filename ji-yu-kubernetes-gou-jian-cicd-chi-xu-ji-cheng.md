@@ -18,9 +18,9 @@
 > > 2. sh /opt/harbor/install.sh
 > > 3. 登录后新建 `springcloud` , 访问级别设置为公开
 > > 4. 上传镜像到 Harbor 
-> > >  - docker login -uadmin -pHarbor12345 IP
+> > >  - docker login -uadmin -pHarbor12345 IP 
 > > >  - docker load -i BlueOcean/images/maven_latest.tar  
-> > >  - docker tag maven IP/library/maven
+> > >  - docker tag maven IP/library/maven 
 > > >  - docker push IP/library/maven
 > > >  - docker load -i BlueOcean/images/java_8-jre.tar 
 > > >  - docker load -i BlueOcean/images/jenkins_jenkins_latest.tar  
@@ -35,10 +35,10 @@
 > > 部署Jenkins需要使用到一个拥有相关权限的serviceAccount，名称为jenkins-admin，可以给jenkins-admin赋予一些必要的权限，也可以直接绑定一个cluster-admin的集群角色权限，此处选择给予集群角色权限。
 > > ```
 > > 2. 编写资源清单文件 `vi jenkins-deploy.yaml `
-> > > ```yaml
-> > > apiVersion: v1
-kind: Service
-metadata:
+```yaml 
+apiVersion: v1  
+kind: Service  
+metadata: 
   name: jenkins
   labels:
     app: jenkins
@@ -57,7 +57,7 @@ spec:
     app: jenkins
 
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: jenkins
@@ -65,7 +65,7 @@ metadata:
     app: jenkins
 spec:
   selector:
-    matchLabels:
+    matchLabels: 
       app: jenkins
   template:
     metadata:
@@ -105,7 +105,7 @@ spec:
         hostPath:
           path: /var/run/docker.sock
       - name: kubectl
-        hostPath:
+        hostPath: 
           path: /usr/bin/kubectl
       - name: kubeconfig
         hostPath:
@@ -133,7 +133,7 @@ metadata:
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
-metadata:
+metadata: 
   name: jenkins-admin
   labels:
     name: jenkins
@@ -143,6 +143,6 @@ subjects:
     namespace: default
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: cluster-admin 
   apiGroup: rbac.authorization.k8s.io
-> > > ```
+```
