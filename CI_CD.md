@@ -163,7 +163,7 @@ roleRef:
 > > > 
 > > 7.单击“开始使用 Jenkins ”按钮并使用新创建的用户登录 Jenkins
 
-* #### 部署 Gitlab##
+*  #### 部署 Gitlab
 
 > ```
 > GitLab是利用Ruby on Rails一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。与GitHub类似，GitLab能够浏览源代码，管理缺陷和注释，可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库，团队成员可以利用内置的简单聊天程序（Wall）进行交流。GitLab还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。本项目GitLab与Harbor共用一台服务器。
@@ -222,4 +222,92 @@ spec:
 > 3. 查看 Pods `kubectl -n devops get pods`
 > 4. 查看 Gitlab Service `kubectl -n devops get svc`
 > 5. 因为 Gitlab 启动较慢 大致 1-3 分钟 , 查看启动状态 `kubectl logs`,完成后通过 Web 访问 `http://master_IP:30888` , 默认 用户名为 `root` 密码为 `admin@123`
-> 6. 
+> 6. 单机 `New project` 按钮 , 单击 `Create blank project` 按钮创建项目 `springcloud` ，可见等级选择`Public` , 单机 `Create project` 后进入项目 , `push` 源代码到`springcloud` 项目 :
+> > - cd BlueOcean/springcloud/
+> > - git config --global user.name "administrator"
+> > - git config --global user.email "admin@example.com"
+> > - git remote remove origin
+> > - git remote add origin http://10.26.10.143:30888/root/springcloud.git 
+> > - git add .
+> > - git commit -m "initial commit"
+> > ```
+> > # On branch master
+> > nothing to commit, working directory clean
+> > ```
+> > - git push -u origin master
+> > ```
+> > Username for 'http://10.26.10.143:30888': root
+> > Password for 'http://root@10.26.15.244:30888': 
+> > Counting objects: 3192, done.
+> > Delta compression using up to 8 threads.
+> > Compressing objects: 100% (1428/1428), done.
+> > Writing objects: 100% (3192/3192), 1.40 MiB | 1.70 MiB/s, done.
+> > Total 3192 (delta 1233), reused 3010 (delta 1207)
+> > remote: Resolving deltas: 100% (1233/1233), done.
+> > remote: 
+> > remote: To create a merge request for master, visit:
+> > remote:   http://gitlab-6778c45f9-xx5gs/root/springcloud/-/merge_requests/new?merge_request%5Bsource_branch%5D=master
+> > remote: 
+> > To http://10.26.15.244:30888/root/springcloud.git
+> >  * [new branch]      master -> master
+> > Branch master set up to track remote branch master from origin.
+> > ```
+> 7. 配置 `Jenkins` 连接 `Gitlab` , 配置 `Outbound requests` , `http://master_IP:30888/admin` , 在左侧导航栏选择 `Settings→Network` ，设置 `Outbound requests` ，勾选 `Allow requests to the local network from web hooks and services` 复选框 , 保存.
+> 8. 创建 `GitLab API Token` , 单击 `GitLab` 用户头像图标 , 在左侧导航栏选择 `Preferences` , 在左侧导航栏选择`Access Tokens`添加 Token , 单击`Create personal access token`按钮生成 Token , 记录 Token 备用 .
+> 9. 配置 `Jenkins` , 登录 `Jenkins`首页，选择 `系统管理→系统配置` ，配置 `GitLab` 信息，取消勾选 `Enable authentiviion for ‘/project’ end-point` ，输入 `Connection name”和“Gitlab host URL` , 添加 `Credentials` ，单击 ` “添加”→“Jenkins” ` 按钮添加认证信息，将 `Gitlab API Token` 填入 , 选择`新添加的证书` ，然后单击 `Test Connection` 按钮 , 返回结果为 `Success` ，说明 `Jenkins` 可以正常连接 `GitLab` .
+
+*  #### Jenkinsfile
+
+> 1. 登录 `Jenkins` 首页，新建任务 `springcloud` ，任务类型选择 `流水线` , 单击 `确定` 按钮，配置`构建触发器` , 记录下 `GitLab webhook URL` 的地址`  http://10.26.15.244:30880/project/springcloud  `  ，后期配置 `webhook` 需要使用 , 配置 `流水线` ，在定义域中选择 `Pipeline script from SCM` ，此选项指示 Jenkins从源代码管理（SCM）仓库获取流水线。在SCM域中选择 `Git` ，然后输入 `Repository URL` ，在 `Credentials` 中选择 `添加` ，凭据类型选择 `Username with password` ，然后输入对应信息 , 单击 `保存` 按钮，回到流水线中，在 `Credentials` 域选择刚才添加的凭证 , 保存.
+
+> 2. 编写流水线 , `Pipeline` 有两种创建方法——可以直接在Jenkins的Web UI界面中输入脚本；也可以通过创建一个 `Jenkinsfile` 脚本文件放入项目源码库中。一般推荐在 `Jenkins` 中直接从源代码控制（SCMD）中直接载入 `Jenkinsfile Pipeline` 这种方法。登录 `GitLab` 进入 `springcloud` 项目，选择新建文件 ， 将流水线脚本输入到 `Jenkinsfile` 中 .  Pipeline 包括声明式语法和脚本式语法。声明式和脚本式的流水线从根本上是不同的。声明式是 Jenkins 流水线更友好的特性。脚本式的流水线语法，提供更丰富的语法特性。声明式流水线使编写和读取流水线代码更容易设计。   此处选择声明式Pipeline , 代码写入后 , 开启 `Jenkins` 匿名访问登录 `Jenkins` 首页，选择 `系统管理→全局安全配置` ，授权策略选择 `任何用户可以做任何事（没有任何限制）` .  完整的流水线脚本如下：
+```sh
+pipeline{
+    agent none
+    stages{
+        stage('mvn-build'){
+            agent {
+                docker {
+                    image '10.26.15.244/library/maven'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+            steps{
+                sh 'cp -rfv /opt/repository /root/.m2/ && ls -l /root/.m2/repository'
+                sh 'mvn package -DskipTests'
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
+            }
+        }
+        stage('image-build'){
+            agent any
+            steps{
+                sh 'cd gateway && docker build -t 10.26.15.244/springcloud/gateway -f Dockerfile .'
+                sh 'cd config && docker build -t 10.26.15.244/springcloud/config -f Dockerfile .'
+                sh 'docker login 10.26.15.244 -u=admin -p=Harbor12345'
+                sh 'docker push 10.26.15.244/springcloud/gateway'
+                sh 'docker push 10.26.15.244/springcloud/config'
+            }
+        }
+        stage('cloud-deploy'){
+            agent any
+            steps{
+                sh 'sed -i "s/sqshq\\/piggymetrics-gateway/10.26.15.244\\/springcloud\\/gateway/g" yaml/deployment/gateway-deployment.yaml'
+                sh 'sed -i "s/sqshq\\/piggymetrics-config/10.26.15.244\\/springcloud\\/config/g" yaml/deployment/config-deployment.yaml'
+                sh 'kubectl create ns springcloud'
+                sh 'kubectl apply -f yaml/deployment/gateway-deployment.yaml'
+                sh 'kubectl apply -f yaml/deployment/config-deployment.yaml'
+                sh 'kubectl apply -f yaml/svc/gateway-svc.yaml'
+                sh 'kubectl apply -f yaml/svc/config-svc.yaml'
+            }
+        }
+    }
+}
+```
+* #### 构建 CI/CD
+> 1. 在 `GitLab` 的项目中，通常会使用 `Webhook` 的各种事件来触发对应的构建，通常配置好后会向设定好的 `URL` 发送 `post` 请求。登录 `GitLab` ，进入 `springcloud` 项目，现在左侧导航栏` Settings→Webhooks ` ，将前面记录的 `GitLab webhook URL` 地址填入 `URL` 处，禁用 `SSL` 认证，单击 ` Add webhook ` 按钮添加 `webhook` ， 单击 ` Test→Push events ` 按钮进行测试 , 结果返回 ` HTTP 200 `则表明 `Webhook` 配置成功.
+> 2. 登录 `Jenkins` ，可以看到 `springcloud` 项目已经开始构建，选择左侧导航栏 `打开Blue Ocean` , Blue Ocean是pipeline的可视化UI，同时兼容经典的自由模式的job。Jenkins Pipeline从头开始设计，但仍与自由式作业兼容，Blue Ocean减少了经典模式下的混乱并为团队中的每个成员增加了清晰度。   单击项目名称 `springcloud` , 单击正在构建的 `pipeline` 可以查看阶段视图 , 单击任意  ` > ` 符号可查看每个 `Step` 的构建详情 , 若构建成功，`Blue Ocean`界面会变为`绿色` , 退出阶段试图界面 , 返回Jenkins首页 .
+> 3. 进入 `Harbor` 仓库 `springcloud` 项目查看镜像列表，可以看到已自动上传了一个 `gateway`镜像 , 通过端口 `30010` 访问服务.
+
+
+
+# 本篇来源于 华为云社区 https://bbs.huaweicloud.com/blogs/413637
