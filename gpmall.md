@@ -3,8 +3,8 @@
 ## 公有云应用迁移上云 gpmall 商城部署
 
 ```
-使用公有云服务器，要求 centos7.5，云数据库 MySQL5.6 ，Redis 数据库为 4.0，内存容量1GB , 密码为 Abc@123456
-使用 xshell 或 finalshell连接并上传软件包 `elasticsearch-8.5.2-x86_64.rpm` `gpmall-cloud.tar.gz`
+使用公有云服务器，要求 centos7.5 2核4GB内存50G硬盘 ，云数据库 MySQL5.6 1核1000MB，Redis 数据库为 4.0 内存1GB , centos与redis密码为 Abc@123456 , mysql密码为 Root123456
+上传软件包 `elasticsearch-8.5.2-x86_64.rpm` `gpmall-cloud.tar.gz`
 ```
 
 * **云主机部署**
