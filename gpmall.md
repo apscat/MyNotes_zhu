@@ -37,7 +37,8 @@
 >
 > 4. 安装基础服务 , java elasticsearch nginx zookeeper kafka , 将 `zookeeper-3.4.14.tar.gz` 移动到 /opt 目录下 , 将 `kafka_2.11-1.1.1.tar.gz` 移动到opt目录下
 >
-> > * \[root@gpmall \~]# `yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel` \[root@gpmall \~]# `java -version`
+> > * \[root@gpmall \~]# `yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel`
+> > * \[root@gpmall \~]# `java -version`
 > >
 > > ```
 > > openjdk version "1.8.0_312"
