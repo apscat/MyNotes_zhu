@@ -3,10 +3,42 @@
 * #### 环境准备
 
 > 拉取软件包，挂载到`mnt`目录，将文件全部复制到`opt`目录下，安装`kubeeasy`，通过`kubeeasy`安装`depend`依赖包，部署免秘钥
+```
+kubeeasy install depend \
+  --host 192.168.1.100,192.168.1.101,192.168.1.102 \
+  --user root \
+  --password 000000 \
+  --offline-file /mnt/dependencies/base-rpms.tar.gz
+```
+```
+kubeeasy check ssh \
+  --host 192.168.1.100,192.168.1.101,192.168.1.102 \
+  --user root \
+  --password 000000
+```
+
+```
+kubeeasy create ssh-keygen \
+  --master 192.168.1.100 \
+  --worker 192.168.1.101,192.168.1.102 \
+  --user root \
+  --password 000000
+```
 
 * #### 部署kubernetes集群
 
-> 通过kubeeasy部署kubernetes_**注意要标注版本为1.22.1**_，通过`kubectl cluster-info`查看集群状态，通过`kubectl top nodes --use-protocol-buffers`查看节点负载情况，客户端`master_ip:30080`访问页面，完成搭建后。使用nginx镜像在default命名空间下创建一个名为`exam`的`pod`，设置环境变量为`exam`，值为`2022`，加载本地nginx镜像，编写`pod.yaml`文件
+> 通过kubeeasy部署kubernetes_**注意要标注版本为1.22.1**_，
+```
+kubeeasy install kubernetes \
+  --master 192.168.1.100 \
+  --worker 192.168.1.101,192.168.1.102 \
+  --user root \
+  --password 000000 \
+  --version 1.22.1 \
+  --pod-cidr 192.168.1.0/24 \
+  --offline-file ./kubernetes.tar.gz
+```
+> 通过`kubectl cluster-info`查看集群状态，通过`kubectl top nodes --use-protocol-buffers`查看节点负载情况，客户端`master_ip:30080`访问页面，完成搭建后。使用nginx镜像在default命名空间下创建一个名为`exam`的`pod`，设置环境变量为`exam`，值为`2022`，加载本地nginx镜像，编写`pod.yaml`文件:
 
 ```yaml
 apiVersion: v1                   #使用 Kubernetes API 的版本
