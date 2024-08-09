@@ -10,3 +10,5 @@ Centos7.5最小化安装后基础环境
 >> - `firewall-cmd --zone=public --add-port=8888/tcp --permanent`
 >> - 查看开放端口 `firewall-cmd --list-ports`
 
+
+# 本篇来源于 51CTO , 原文链接 : `https://blog.51cto.com/u_16213596/10305651` , 作者: mob64ca13fb6939
