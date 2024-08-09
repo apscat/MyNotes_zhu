@@ -1,5 +1,7 @@
 # gpmall
 
+### 本篇来源于 稀土掘金 作者：斐秋 原文链接: `https://juejin.cn/post/7098247684221304868`
+
 ## 公有云应用迁移上云 gpmall 商城部署
 
 ```
@@ -192,4 +194,4 @@ location / {
 * screen -ls // 显示目前所有的screen窗口
 * Ctrl + a d // 离开
 
-### 本篇来源于 稀土掘金 作者：斐秋 原文链接: `https://juejin.cn/post/7098247684221304868`
+
