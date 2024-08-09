@@ -1,4 +1,7 @@
 # 云平台部署(最简单)
+
+### 本篇来源于 51CTO , 原文链接 : `https://blog.51cto.com/u_16213596/10305651` , 作者: mob64ca13fb6939
+
 Centos7.5最小化安装后基础环境
 ```
 配置 IP GTEWAY DNS ,上传软件包 Centos-7.repo 配置 yum 源 或 curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
@@ -11,4 +14,4 @@ Centos7.5最小化安装后基础环境
 >> - 查看开放端口 `firewall-cmd --list-ports`
 
 
-# 本篇来源于 51CTO , 原文链接 : `https://blog.51cto.com/u_16213596/10305651` , 作者: mob64ca13fb6939
+
