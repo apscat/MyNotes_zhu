@@ -9,7 +9,7 @@ Centos7.5最小化安装后基础环境
 > 1. 安装管理软件 此处选择 宝塔
 >> - `yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh` 
 >> - 保存登录地址 用户名 密码
-> 2. 开放 8888 端口
+> 2. 开放相关端口
 >> - `firewall-cmd --zone=public --add-port=8888/tcp --permanent` 
 >> - 查看开放端口 `firewall-cmd --list-ports`
 > 3. 登录后绑定宝塔账号 , 自动跳出的窗口提示安装网站运行环境 , 选择 LNMP极速安装 , 等待...
@@ -20,6 +20,7 @@ Centos7.5最小化安装后基础环境
 这个错误是因为Nginx需要的共享库文件 `libluajit-5.1.so.2` 丢失或未安装 , 安装 luajit 提供缺失的库文件 , yum install luajit -y , 但是安装后可能会报 符号查找 错误
 出现 符号查找 错误不建议继续 , 重头再来
 ```
-> > -  点击文件->192.168.100.10 , 上传 WordPress 压缩包内文件 , 
+> > - 点击文件->192.168.100.10 , 上传 WordPress 压缩包内文件
+> > - 访问 http://192.168.100.10 , 进入安装页面 ,  保存登录信息 zz gfn(Rb2Y!pepCOxph^ 
  
 
