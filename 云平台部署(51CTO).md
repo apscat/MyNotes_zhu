@@ -13,7 +13,7 @@ Centos7.5最小化安装后基础环境
 >> - `firewall-cmd --zone=public --add-port=8888/tcp --permanent` 
 >> - 查看开放端口 `firewall-cmd --list-ports`
 > 3. 登录后绑定宝塔账号 , 自动跳出的窗口提示安装网站运行环境 , 选择 LNMP极速安装 , 等待...
-> 4. 网站搭建程序选择 WordPress , 通过此链接跳转至WordPress官网[WordPress](https://cn.wordpress.org/download/)。
+> 4. 网站搭建程序选择 WordPress ,  [通过此链接跳转至WordPress官网](https://cn.wordpress.org/download/)。
 > > - 点击网站->添加站点 , 域名: 192.168.100.10 , 数据库: MySQL , 数据库名与账号一致: 192_168_100_10 , 密码: Pj33W4ZtdG319BHD
 ```
 可能会报 `/www/server/nginx/sbin/nginx: error while loading shared libraries: libluajit-5.1.so.2: cannot open shared object file: No such file or directory`
