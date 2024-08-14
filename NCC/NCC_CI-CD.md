@@ -1,5 +1,7 @@
 # 基于 Kubernetes 构建 CI/CD 持续集成
 
+## 本篇来源于 华为云社区 https://bbs.huaweicloud.com/blogs/413637
+
 ```
 部署Kubernetes,上传软件包 `BlueOcean.tar.gz`
 ```
@@ -310,4 +312,4 @@ pipeline{
 
 
 
-# 本篇来源于 华为云社区 https://bbs.huaweicloud.com/blogs/413637
+
