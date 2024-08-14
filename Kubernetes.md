@@ -1,6 +1,6 @@
 # Kubernetes
 
-### 本篇来源于 作者: wenbin8 原文链接: `https://github.com/wenbin8/doc/blob/master/分布式/CloudNative/Kubernetes/01-Kubernetes集群搭建.md`
+### 本篇来源于
 
 Centos7.5最小化安装后基础环境
 ```
