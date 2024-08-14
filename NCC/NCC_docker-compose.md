@@ -3,6 +3,7 @@
 > 安装软件包，加载centos7.5镜像， `init-cluster` 初始化集群 kubernetes ，通过 `kubectl cluster-info` 查看集群状态
 
 * ### 容器化部署 MariaDB
+> - cd /root/Pig
 
 编写 `mysql_init.sh`
 
@@ -17,7 +18,7 @@ mysql -uroot -proot -e "source /opt/pig.sql;source /opt/pig_codegen.sql;source /
 ```
 
 _编写yum源_
-
+> - `vi local.repo`
 ```yaml
 [pig]
 name=pig
