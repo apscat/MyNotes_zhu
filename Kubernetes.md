@@ -4,8 +4,8 @@
 
 Centos7.5最小化安装后基础环境
 ```
-建议三台centos , 2核2G起 , master worker1 worker2 , 过程中记得打快照
-配置 IP GTEWAY DNS ,配置 yum 源 上传软件包 Centos-7.repo 替换 CentOS-Base.repo 或 curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+建议三台centos , 2核2G起 , master worker1 worker2 ,
+配置 IP GTEWAY DNS ,配置 yum 源 curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
 ```
 
 * ****
