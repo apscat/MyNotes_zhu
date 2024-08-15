@@ -27,7 +27,7 @@ kubeeasy create ssh-keygen \
 
 * #### 部署kubernetes集群
 
-> 通过kubeeasy部署kubernetes_**注意要标注版本为1.22.1**_，
+> 通过kubeeasy部署kubernetes_**注意要标注版本为1.22.1**_ , 由于默认仓库 k8s.gcr.io 被停止，所以我们使用 registry.k8s.io 仓库
 ```
 kubeeasy install kubernetes \
   --master 192.168.1.100 \
@@ -37,6 +37,7 @@ kubeeasy install kubernetes \
   --version 1.22.1 \
   --pod-cidr 192.168.1.0/24 \
   --offline-file ./kubernetes.tar.gz
+   --images-registry registry.k8s.io
 ```
 > 通过`kubectl cluster-info`查看集群状态，通过`kubectl top nodes --use-protocol-buffers`查看节点负载情况，客户端`master_ip:30080`访问页面，完成搭建后。使用nginx镜像在default命名空间下创建一个名为`exam`的`pod`，设置环境变量为`exam`，值为`2022`，加载本地nginx镜像，编写`pod.yaml`文件:
 
