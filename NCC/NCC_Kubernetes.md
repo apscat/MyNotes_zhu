@@ -27,7 +27,7 @@ kubeeasy create ssh-keygen \
 
 * #### 部署kubernetes集群
 
-> 通过kubeeasy部署kubernetes_**注意要标注版本为1.22.1**_ , 由于默认仓库 k8s.gcr.io 被停止，所以我们使用 registry.k8s.io 仓库 , 在kubernetes.tar.gz包中找到 manifests 下的 `kube-flannel.yaml` , `local-path.yaml` , `metrics-server.yaml`
+> 通过kubeeasy部署kubernetes_**注意要标注版本为1.22.1**_ , 由于默认仓库 k8s.gcr.io 被停止，所以我们使用 registry.k8s.io 仓库 , 在kubernetes.tar.gz包中找到 manifests 下的 `kube-flannel.yaml` , `local-path.yaml` , `metrics-server.yaml` 将 k8s.gcr.io 替换为 registry.k8s.io . 在 /etc/kubernetes/ 下找到 `kubeadm-config.yaml` 将 k8s.gcr.io 替换为 registry.k8s.io .
 ```
 kubeeasy install kubernetes \
   --master 192.168.1.100 \
