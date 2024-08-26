@@ -229,7 +229,7 @@ spec:
 > > - git config --global user.name "administrator"
 > > - git config --global user.email "admin@example.com"
 > > - git remote remove origin
-> > - git remote add origin http://10.26.10.143:30888/root/springcloud.git 
+> > - git remote add origin http://192.168.1.100:30888/root/springcloud.git 
 > > - git add .
 > > - git commit -m "initial commit"
 > > ```
@@ -238,8 +238,8 @@ spec:
 > > ```
 > > - git push -u origin master
 > > ```
-> > Username for 'http://10.26.10.143:30888': root
-> > Password for 'http://root@10.26.15.244:30888': 
+> > Username for 'http://192.168.1.100:30888': root
+> > Password for 'http://root@192.168.1.100:30888': 
 > > Counting objects: 3192, done.
 > > Delta compression using up to 8 threads.
 > > Compressing objects: 100% (1428/1428), done.
@@ -250,7 +250,7 @@ spec:
 > > remote: To create a merge request for master, visit:
 > > remote:   http://gitlab-6778c45f9-xx5gs/root/springcloud/-/merge_requests/new?merge_request%5Bsource_branch%5D=master
 > > remote: 
-> > To http://10.26.15.244:30888/root/springcloud.git
+> > To http://192.168.1.100:30888/root/springcloud.git
 > >  * [new branch]      master -> master
 > > Branch master set up to track remote branch master from origin.
 > > ```
@@ -260,7 +260,7 @@ spec:
 
 *  #### Jenkinsfile
 
-> 1. 登录 `Jenkins` 首页，新建任务 `springcloud` ，任务类型选择 `流水线` , 单击 `确定` 按钮，配置`构建触发器` , 记录下 `GitLab webhook URL` 的地址`  http://10.26.15.244:30880/project/springcloud  `  ，后期配置 `webhook` 需要使用 , 配置 `流水线` ，在定义域中选择 `Pipeline script from SCM` ，此选项指示 Jenkins从源代码管理（SCM）仓库获取流水线。在SCM域中选择 `Git` ，然后输入 `Repository URL` ，在 `Credentials` 中选择 `添加` ，凭据类型选择 `Username with password` ，然后输入对应信息 , 单击 `保存` 按钮，回到流水线中，在 `Credentials` 域选择刚才添加的凭证 , 保存.
+> 1. 登录 `Jenkins` 首页，新建任务 `springcloud` ，任务类型选择 `流水线` , 单击 `确定` 按钮，配置`构建触发器` , 记录下 `GitLab webhook URL` 的地址`  http://192.168.1.100:30880/project/springcloud  `  ，后期配置 `webhook` 需要使用 , 配置 `流水线` ，在定义域中选择 `Pipeline script from SCM` ，此选项指示 Jenkins从源代码管理（SCM）仓库获取流水线。在SCM域中选择 `Git` ，然后输入 `Repository URL` ，在 `Credentials` 中选择 `添加` ，凭据类型选择 `Username with password` ，然后输入对应信息 , 单击 `保存` 按钮，回到流水线中，在 `Credentials` 域选择刚才添加的凭证 , 保存.
 
 > 2. 编写流水线 , `Pipeline` 有两种创建方法——可以直接在Jenkins的Web UI界面中输入脚本；也可以通过创建一个 `Jenkinsfile` 脚本文件放入项目源码库中。一般推荐在 `Jenkins` 中直接从源代码控制（SCMD）中直接载入 `Jenkinsfile Pipeline` 这种方法。登录 `GitLab` 进入 `springcloud` 项目，选择新建文件 ， 将流水线脚本输入到 `Jenkinsfile` 中 .  Pipeline 包括声明式语法和脚本式语法。声明式和脚本式的流水线从根本上是不同的。声明式是 Jenkins 流水线更友好的特性。脚本式的流水线语法，提供更丰富的语法特性。声明式流水线使编写和读取流水线代码更容易设计。   此处选择声明式Pipeline , 代码写入后 , 开启 `Jenkins` 匿名访问登录 `Jenkins` 首页，选择 `系统管理→全局安全配置` ，授权策略选择 `任何用户可以做任何事（没有任何限制）` .  完整的流水线脚本如下：
 ```sh
@@ -270,7 +270,7 @@ pipeline{
         stage('mvn-build'){
             agent {
                 docker {
-                    image '10.26.15.244/library/maven'
+                    image '192.168.1.100/library/maven'
                     args '-v /root/.m2:/root/.m2'
                 }
             }
@@ -283,18 +283,18 @@ pipeline{
         stage('image-build'){
             agent any
             steps{
-                sh 'cd gateway && docker build -t 10.26.15.244/springcloud/gateway -f Dockerfile .'
-                sh 'cd config && docker build -t 10.26.15.244/springcloud/config -f Dockerfile .'
-                sh 'docker login 10.26.15.244 -u=admin -p=Harbor12345'
-                sh 'docker push 10.26.15.244/springcloud/gateway'
-                sh 'docker push 10.26.15.244/springcloud/config'
+                sh 'cd gateway && docker build -t 192.168.1.100/springcloud/gateway -f Dockerfile .'
+                sh 'cd config && docker build -t 192.168.1.100/springcloud/config -f Dockerfile .'
+                sh 'docker login 192.168.1.100 -u=admin -p=Harbor12345'
+                sh 'docker push 192.168.1.100/springcloud/gateway'
+                sh 'docker push 192.168.1.100/springcloud/config'
             }
         }
         stage('cloud-deploy'){
             agent any
             steps{
-                sh 'sed -i "s/sqshq\\/piggymetrics-gateway/10.26.15.244\\/springcloud\\/gateway/g" yaml/deployment/gateway-deployment.yaml'
-                sh 'sed -i "s/sqshq\\/piggymetrics-config/10.26.15.244\\/springcloud\\/config/g" yaml/deployment/config-deployment.yaml'
+                sh 'sed -i "s/sqshq\\/piggymetrics-gateway/192.168.1.100\\/springcloud\\/gateway/g" yaml/deployment/gateway-deployment.yaml'
+                sh 'sed -i "s/sqshq\\/piggymetrics-config/192.168.1.100\\/springcloud\\/config/g" yaml/deployment/config-deployment.yaml'
                 sh 'kubectl create ns springcloud'
                 sh 'kubectl apply -f yaml/deployment/gateway-deployment.yaml'
                 sh 'kubectl apply -f yaml/deployment/config-deployment.yaml'
