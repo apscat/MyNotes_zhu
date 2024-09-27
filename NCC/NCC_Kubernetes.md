@@ -38,7 +38,7 @@ kubeeasy install kubernetes \
   --pod-cidr 192.168.1.0/24 \
   --offline-file ./kubernetes.tar.gz
 ```
-> 通过`kubectl cluster-info`查看集群状态，通过`kubectl top nodes --use-protocol-buffers`查看节点负载情况，客户端`master_ip:30080`访问页面，完成搭建后。使用nginx镜像在default命名空间下创建一个名为`exam`的`pod`，设置环境变量为`exam`，值为`2022`，加载本地nginx镜像，编写`pod.yaml`文件:
+> 通过`kubectl cluster-info`查看集群状态，通过`kubectl top nodes --use-protocol-buffers`查看节点负载情况，客户端`master_ip:30080`访问页面，默认登录账号为`admin` 密码为`Kuboard123` ,完成搭建后。使用nginx镜像在default命名空间下创建一个名为`exam`的`pod`，设置环境变量为`exam`，值为`2022`，加载本地nginx镜像，编写`pod.yaml`文件:
 
 ```yaml
 apiVersion: v1                   #使用 Kubernetes API 的版本
