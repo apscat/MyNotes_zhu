@@ -1,6 +1,6 @@
 # Docker-Compose
 
-> 安装软件包， `init-cluster` 初始化集群 kubernetes ，通过 `kubectl cluster-info` 查看集群状态
+> 安装软件包， 加载`CentOS_7.9.2009.tar` 镜像, `init-cluster` 初始化集群 kubernetes ，通过 `kubectl cluster-info` 查看集群状态
 
 * ### 容器化部署 MariaDB
 > - cd /root/Pig
