@@ -60,8 +60,11 @@ spec:                                 # Pod 的规范部分，配置和行为
 * #### 部署Kubevirt
 
 > `cp /mnt/kubevirt.tar.gz /mnt/istio.tar.gz /mnt/helm-v3.7.1-linux-amd64.tar.gz /mnt/harbor-offline.tar.gz`
+
 > `tar -xzvf kubevirt.tar.gz`
+
 > `cp /root/kubevirt/tools/virtctl-v0.47.1-linux-amd64 /bin/kubevirt`
+
 > kubeeasy add --virt kubevirt **#kubeeasy add --名 值**
 >
 > > 查看 `kubectl -n kubevirt get pods`
