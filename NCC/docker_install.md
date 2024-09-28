@@ -9,7 +9,7 @@
 [docker]
 name=docker
 baseurl=file:///root/docker-repo
-gpgheck=0
+gpgcheck=0
 enabled=1
 ```
 - 完成后 建议先清除缓存 再进行安装
