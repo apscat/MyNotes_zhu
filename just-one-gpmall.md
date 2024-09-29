@@ -21,7 +21,7 @@
 - > 挂载镜像,配置本地yum源,备份原文件
 > > 1. `mount /root/CentOS-7-x86_64-DVD-1511.iso /opt/centos/`
 > > 2. `vi /etc/yum.repos.d/local.repo`
-```repo
+```yaml
 [centos]
 name=centos
 baseurl=file:///opt/centos
@@ -54,4 +54,75 @@ enabled=1
 > > > - `sh kafka-server-start.sh -daemon ../config/server.properties`
 > > > - 通过 `jps` 或 `netstat -ntpl` 查看kafka是否启动
 > > > > 安装net-tools工具包 `yum install net-tools -y`   `netstat -ntpl` 查看是否有9092端口 有则kafka成功启动
-- > 配置
+
+- > 配置以上服务
+> > 1. 配置mariadb服务,修改数据库配置文件并启动MariaDB数据库，设置root用户密码为123456，并创建gpmall数据库，将提供的gpmall.sql导入 
+> > > - `cd ~ && vi /etc/my.cnf` 在文件尾添加以下内容:
+```yaml
+[mysqld]
+
+init_connect='SET collation_connection = utf8_unicode_ci'
+init_connect='SET NAMES utf8'
+character-set-server=utf8
+collation-server=utf8_unicode_ci
+skip-character-set-client-handshake
+```
+> > > - `systemctl start mariadb`
+> > > - `mysqladmin -uroot password 123456`
+> > > - `mysql -uroot -p123456`
+> > > - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'ip-you' IDENTIFIED BY '123456' WITH GRANT OPTION;`
+> > > - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;`
+> > > - `create database gpmall;`
+> > > - `use gpmall;`
+> > > - `source /root/gpmall.sql`
+> > > - `systemctl enable mariadb` 设置mariadb开机自启
+> > 2.  修改redis文件,启动redis
+> > > - ` vi /etc/redis.conf` 将61行的`bind 127.0.0.1`这一行注释掉将80行的`protected-mode yes ` 改为 `protected-mode no` 找到 `requirepass ` 去掉注释,更改为`requirepass Root123456 `
+> > > - `systemctl start redis && systemctl enable redis`
+> > 3. 配置Elasticsearch服务,也可不配置
+> > > - `vi /etc/elasticsearch/elasticsearch.yml`在文件头部加入以下内容:
+```yaml
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-credentials: true
+```
+> > > - 将如下4条语句前的注释符'#'去掉,并修改`network.host`的IP为本机IP
+```yaml
+cluster.name: my-application
+node.name: node-1
+network.host: 192.168.100.101
+http.port: 9200
+```
+> > > - `systemctl start elasticsearch && systemctl enable elasticsearch`
+> > 4. 配置nginx服务 `systemctl start nginx && systemctl enable nginx`
+
+- > gpmall部署
+> > 1. `vi /etc/hosts`
+```yaml
+192.168.100.9 mall
+192.168.100.9 kafka.mall
+127.0.0.1 mysql.mall
+192.168.100.9 redis.mall
+192.168.100.9 zookeeper.mall
+```
+> > 2. 清除原nginx的网页文件
+> > > - `rm -rf /usr/share/nginx/html/*`
+> > > - `cp -rvf gpmall-cloud/dist/* /usr/share/nginx/html/`
+> > > - `vi /etc/nginx/nginx.conf.default`
+```
+location /user {
+    proxy_pass http://127.0.0.1:8082;
+}
+location /shopping {
+    proxy_pass http://127.0.0.1:8081;
+}
+location /cashier {
+    proxy_pass http://127.0.0.1:8083;
+}
+```
+> > > - `systemctl restart nginx`
+- > 后端部署,此处使用 screen 
+> > 1. `java -jar shopping-provider-0.0.1-SNAPSHOT.jar `
+> > 2. `java -jar user-provider-0.0.1-SNAPSHOT.jar `
+> > 3. `java -jar gpmall-shopping-0.0.1-SNAPSHOT.jar`
+> > 4. `java -jar gpmall-user-0.0.1-SNAPSHOT.jar `
