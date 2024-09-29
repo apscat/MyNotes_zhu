@@ -3,7 +3,7 @@
 ## 本篇来源于 https://www.cnblogs.com/sh1ny2/p/14042842.html
 
 ```
-上传 CentOS-7-x86_64-DVD-1511.iso , gpmall-cloud.tar.gz 
+上传 CentOS-7-x86_64-DVD-1511.iso , gpmall-cloud.tar.gz ,成功后默认账号密码为test/test
 ```
 
 * ### 基础环境
