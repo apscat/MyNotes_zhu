@@ -68,10 +68,10 @@ collation-server=utf8_unicode_ci
 skip-character-set-client-handshake
 ```
 > > > - `systemctl start mariadb`
-> > > - `mysqladmin -uroot password 123456`
-> > > - `mysql -uroot -p123456`
-> > > - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'ip-you' IDENTIFIED BY '123456' WITH GRANT OPTION;`
-> > > - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;`
+> > > - `mysqladmin -uroot password Root123456`
+> > > - `mysql -uroot -pRoot123456`
+> > > - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'ip-you' IDENTIFIED BY 'Root123456' WITH GRANT OPTION;`
+> > > - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'Root123456' WITH GRANT OPTION;`
 > > > - `create database gpmall;`
 > > > - `use gpmall;`
 > > > - `source /root/gpmall.sql`
