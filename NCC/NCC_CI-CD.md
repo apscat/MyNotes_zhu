@@ -8,7 +8,7 @@
 
 * #### 部署 Harbor
 
-> 1. 解压 BlueOcean.tar.gz , 安装docker-compose 
+> 1. 解压 BlueOcean.tar.gz, 安装docker-compose 
 >
 > > 1. `tar -zxvf BlueOcean.tar.gz` 
 > > 2. `cp BlueOcean/tools/docker-compose-Linux-x86_64 /usr/bin/docker-compose`  
